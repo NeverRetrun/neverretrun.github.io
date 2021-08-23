@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  
+    <meta name="keywords" content>
+  
+
+  
+    <meta name="description" content="源码解析-Laravel RedisLock">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>源码解析-Laravel RedisLock [ Void ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/microb.css">
+    
+      <link rel="stylesheet" href="/css/iconfont.css">
+    
+  
+</head>
+
+<body>
+  <nav class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+  <!-- <ul class="pure-menu-list float-r clearfix">
+    
+      <li class="pure-menu-item toc-menu">
+        <a id="menu-main-post" class="pure-menu-link" href="javascript:;">
+          <img class="menu-icon" src="/logo.png" alt="MENU">
+        </a>
+      </li>
+    
+  </ul>   -->
+  <a class="pure-menu-heading" href="/">
+      <h1 class="title">Void</h1>
+      <!-- <span>一个后端程序员</span> -->
+  </a>
+
+  <a href="/about" class="pure-menu-item pure-menu-has-children">
+    <h2 class="subtitle">about</h2>
+  </a>
+
+  <!-- 
+  <img class="logo" id="logo" src="/logo.png" alt="logo">
+   -->
+</nav>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <article class="post" id="post">
+  <header class="post-header text-center">
+    <h1 class="title">
+      源码解析-Laravel RedisLock
+    </h1>
+    
+    <time class="time" datetime="2021-08-23T23:34:00.000Z">
+      2021-08-24
+    </time>
+    
+    <hr>
+  </header>
+  <div class="post-content">
+    <p>最近在尝试<code>Hyperf</code>，但是<code>Hyperf</code>对于简单的东西实现的很少。 在Laravel中可以很方便的<code>Cache::lock</code>，因为Hyperf整体实现是遵守Psr的。Cache也是基础<code>SimpleCacheInterface</code>实现的，这里就没有像Laravel一样有lock这种方法。那只能自己实现一个简单Redis锁了。这里直接看Laravel的实现。</p>
+<p>Redis锁的实现比较简单。先讲下Laravel的实现的结构。</p>
+<blockquote>
+<p>Lock interface -&gt;  上层定义的整体Cache::lock 整体的抽象。 与外层调用方法</p>
+<p>​        Lock abstractClass -&gt; 这里直接实现了get方法，细分了release 与 acquire的抽象方法</p>
+<p>​                RedisLock class -&gt; Redis锁的实现类</p>
+<p>​                    PhpRedisLock class  PhpRedis扩展独特的实现类 继承了RedisLock类，重写release方法 主要追加了压缩owner的内容</p>
+</blockquote>
+<p>如果我们看源码就更简单了，直接从Lock abstractClass 抽象类这里看。它对于get这个方法的实现</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">get</span><span class="params">($callback = null)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $result = <span class="keyword">$this</span>-&gt;acquire(); <span class="comment">#拿到锁</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ($result &amp;&amp; is_callable($callback)) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> $callback(); <span class="comment">#执行</span></span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                <span class="keyword">$this</span>-&gt;release(); <span class="comment">#释放锁</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> $result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>然后看RedisLock的acquire实现和release实现</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">acquire</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">  			<span class="comment">#主要靠NX来限制争抢锁</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;seconds &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;redis-&gt;set(<span class="keyword">$this</span>-&gt;name, <span class="keyword">$this</span>-&gt;owner, <span class="string">'EX'</span>, <span class="keyword">$this</span>-&gt;seconds, <span class="string">'NX'</span>) == <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;redis-&gt;setnx(<span class="keyword">$this</span>-&gt;name, <span class="keyword">$this</span>-&gt;owner) === <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">release</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">      <span class="comment">#释放锁是实现了一个 releaseLock的 Lua脚本。 通过Lua脚本来解决并发</span></span><br><span class="line">        <span class="keyword">return</span> (bool) <span class="keyword">$this</span>-&gt;redis-&gt;eval(LuaScripts::releaseLock(), <span class="number">1</span>, <span class="keyword">$this</span>-&gt;name, <span class="keyword">$this</span>-&gt;owner);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">#这里也很简单 就是获取值 比对一下owner值 如果OK就是直接删掉</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">releaseLock</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&lt;&lt;&lt;'LUA'</span></span><br><span class="line"><span class="string">if redis.call("get",KEYS[1]) == ARGV[1] then</span></span><br><span class="line"><span class="string">    return redis.call("del",KEYS[1])</span></span><br><span class="line"><span class="string">else</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">end</span><br><span class="line">LUA;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>PhpRedisLock与RedisLock不同的地方在于追加了压缩的方法</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">		<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">release</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (bool) <span class="keyword">$this</span>-&gt;redis-&gt;eval(</span><br><span class="line">            LuaScripts::releaseLock(),</span><br><span class="line">            <span class="number">1</span>,</span><br><span class="line">            <span class="keyword">$this</span>-&gt;name,</span><br><span class="line">            <span class="keyword">$this</span>-&gt;serializedAndCompressedOwner()</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">serializedAndCompressedOwner</span><span class="params">()</span>: <span class="title">string</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $client = <span class="keyword">$this</span>-&gt;redis-&gt;client();</span><br><span class="line">				<span class="comment">#这里是php redis的序列化。 我也是后面看了文档才知道有这么个东西</span></span><br><span class="line">        $owner = $client-&gt;_serialize(<span class="keyword">$this</span>-&gt;owner);</span><br><span class="line">				</span><br><span class="line">      	<span class="comment">#这里简单的说下就是判断options中设置的Redis::OPT_COMPRESSION 是哪种压缩</span></span><br><span class="line">      	<span class="comment">#Redis::COMPRESSION_LZF Redis::COMPRESSION_ZSTD Redis::COMPRESSION_LZ4</span></span><br><span class="line">      	<span class="comment">#以上3种压缩常量对应了3种压缩方法。 具体是为了压缩lock 中的 owner值</span></span><br><span class="line">      </span><br><span class="line">        <span class="comment">// https://github.com/phpredis/phpredis/issues/1938</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;compressed()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">$this</span>-&gt;lzfCompressed()) &#123;</span><br><span class="line">                $owner = \lzf_compress($owner);</span><br><span class="line">            &#125; <span class="keyword">elseif</span> (<span class="keyword">$this</span>-&gt;zstdCompressed()) &#123;</span><br><span class="line">                $owner = \zstd_compress($owner, $client-&gt;getOption(Redis::OPT_COMPRESSION_LEVEL));</span><br><span class="line">            &#125; <span class="keyword">elseif</span> (<span class="keyword">$this</span>-&gt;lz4Compressed()) &#123;</span><br><span class="line">                $owner = \lz4_compress($owner, $client-&gt;getOption(Redis::OPT_COMPRESSION_LEVEL));</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> UnexpectedValueException(sprintf(</span><br><span class="line">                    <span class="string">'Unknown phpredis compression in use [%d]. Unable to release lock.'</span>,</span><br><span class="line">                    $client-&gt;getOption(Redis::OPT_COMPRESSION)</span><br><span class="line">                ));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> $owner;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+    <!-- 显示photos -->
+    
+
+  </div>
+  <div class="post-tags">
+    
+  </div>
+</article>
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <a href="/2021/01/17/源码解析-Composer自动加载/" rel="next" title="源码解析-composer自动加载">
+            <span>〈 </span> 源码解析-composer自动加载
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+        
+      </div>
+    </div>
+  
+
+
+
+    </div>
+
+    
+
+  </div>
+
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+      
+        <a href="http://hexo.io" target="_blank" class="footer-link">Hexo</a>
+      
+        <a href="https://github.com/microacup/hexo-theme-micorb" target="_blank" class="footer-link">Theme microb</a>
+      
+    </div>
+  </footer>
+  
+
+<script>
+  // var titleTime,originTitle=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="[闷声发大财中...] "+originTitle,clearTimeout(titleTime)):(document.title="[+1s] "+originTitle,titleTime=setTimeout(function(){document.title=originTitle},2e3))});
+</script>
+
+<script>
+  // (function (window, document) {
+  //   window.requestAnimationFrame = (function () {
+  //     return window.requestAnimationFrame ||
+  //       window.webkitRequestAnimationFrame ||
+  //       window.mozRequestAnimationFrame ||
+  //       window.oRequestAnimationFrame ||
+  //       window.msRequestAnimationFrame ||
+  //       function (callback) {
+  //         setTimeout(callback, 1000 / 60);
+  //       }
+  //   })();
+
+  //   function init() {
+  //     addMenuEvent();
+  //   }
+  //   init();
+
+  //   function addMenuEvent() {
+  //     var menu = document.getElementById('menu-main-post');
+  //     if (menu) {
+  //       var toc = document.getElementById('toc');
+  //       menu.title = toc ? '目录' : '回到顶部';
+  //       menu.onclick = function () {
+  //         if (toc) {
+  //           if (toc.style.display == 'block') {
+  //             toc.style.display = 'none';
+  //           } else {
+  //             toc.style.display = 'block';
+  //           }
+  //         } else {
+  //           returnTop();
+  //         }
+  //       };
+  //     }
+  //   }
+
+  //   var timer = null;
+
+  //   function returnTop() {
+  //     cancelAnimationFrame(timer);
+  //     timer = requestAnimationFrame(function fn() {
+  //       var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+  //       if (oTop > 0) {
+  //         document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+  //         timer = requestAnimationFrame(fn);
+  //       } else {
+  //         cancelAnimationFrame(timer);
+  //       }
+  //     });
+  //   }
+
+  // })(window, document);
+</script>
+
+
+  
+
+
+
+</body>
+</html>
