@@ -14,11 +14,11 @@
   
 
   
-    <meta name="description" content="面试题汇总学习（持续更新）">
+    <meta name="description" content="面试题汇总学习">
   
   
   <link rel="icon" type="image/x-icon" href="/logo.png">
-  <title>面试题汇总学习（持续更新） [ Void ]</title>
+  <title>面试题汇总学习 [ Void ]</title>
   
     <!-- stylesheets list from config.yml -->
     
@@ -29,6 +29,7 @@
       <link rel="stylesheet" href="/css/iconfont.css">
     
   
+<link rel="alternate" href="/atom.xml" title="Void" type="application/atom+xml">
 </head>
 
 <body>
@@ -61,7 +62,7 @@
       <article class="post" id="post">
   <header class="post-header text-center">
     <h1 class="title">
-      面试题汇总学习（持续更新）
+      面试题汇总学习
     </h1>
     
     <time class="time" datetime="2020-11-07T01:13:50.000Z">
@@ -79,6 +80,7 @@
 <li><a href="#Redis集群中数据同步的细节">Redis集群中数据同步的细节</a></li>
 <li><a href="#EasyWechat协程为什么要替换guzzle_handler">EasyWechat协程为什么要替换guzzle_handler</a></li>
 <li><a href="#Redis和MySQL如何保持最终一致性">Redis和MySQL如何保持最终一致性</a></li>
+<li><a href="#解析处理一个大尺寸Json文件">解析处理一个大尺寸Json文件</a></li>
 </ul>
 <h4 id="跨域中HTTP请求交互的细节"><a href="#跨域中HTTP请求交互的细节" class="headerlink" title="跨域中HTTP请求交互的细节"></a>跨域中HTTP请求交互的细节</h4><p>这里其实我知道，但是我可能当时根本没想到一点，后来洗头的时候灵感来了就想到是这个。</p>
 <p>跨域其实分简单请求和非简单请求，2种。一般要带自定义请求头都会是非简单请求，区别也很简单就是非简单请求会发送一个Options请求预检。服务器认可这个请求就对Options请求返回204，如果不认可就返回405。</p>
@@ -128,6 +130,10 @@
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">下面是EasyWechat的代码跳转</span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">getGuzzleHandler</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (property_exists(<span class="keyword">$this</span>, <span class="string">'app'</span>) &amp;&amp; <span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;app[<span class="string">'guzzle_handler'</span>])) &#123;</span><br><span class="line">            <span class="keyword">return</span> is_string($handler = <span class="keyword">$this</span>-&gt;app-&gt;raw(<span class="string">'guzzle_handler'</span>))</span><br><span class="line">                        ? <span class="keyword">new</span> $handler()</span><br><span class="line">                        : $handler;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> \GuzzleHttp\choose_handler();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">=&gt;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getHttpClient</span><span class="params">()</span>: <span class="title">ClientInterface</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!(<span class="keyword">$this</span>-&gt;httpClient <span class="keyword">instanceof</span> ClientInterface)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (property_exists(<span class="keyword">$this</span>, <span class="string">'app'</span>) &amp;&amp; <span class="keyword">$this</span>-&gt;app[<span class="string">'http_client'</span>]) &#123;</span><br><span class="line">                <span class="keyword">$this</span>-&gt;httpClient = <span class="keyword">$this</span>-&gt;app[<span class="string">'http_client'</span>];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">$this</span>-&gt;httpClient = <span class="keyword">new</span> Client([<span class="string">'handler'</span> =&gt; HandlerStack::create(<span class="keyword">$this</span>-&gt;getGuzzleHandler())]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;httpClient;</span><br><span class="line">    &#125;</span><br><span class="line">=&gt; </span><br><span class="line">  Guzzle HandlerStack类 ：</span><br><span class="line">  文档 ：https:<span class="comment">//docs.guzzlephp.org/en/stable/handlers-and-middleware.html</span></span><br></pre></td></tr></table></figure>
 <h4 id="Redis和MySQL如何保持最终一致性"><a href="#Redis和MySQL如何保持最终一致性" class="headerlink" title="Redis和MySQL如何保持最终一致性"></a>Redis和MySQL如何保持最终一致性</h4><p>首先明确<code>Redis</code>与<code>MySQL</code>完全不需要严格保证一致性。所有对一致性严格的要求都需要<code>MySQL</code>去做，即使提高并发水平，最后也是依靠<code>MySQL</code>去反查，去补偿其他软件的数据，从而保证最终一致性。</p>
 <p>在面试时，可以有介入很多方案去保证。但是一定要记住使用<code>Redis</code>初衷是为了提高并发，而不是凭空添加架构中的复杂度。这两者之间要做抉择。</p>
+<h4 id="解析处理一个大尺寸Json文件"><a href="#解析处理一个大尺寸Json文件" class="headerlink" title="解析处理一个大尺寸Json文件"></a>解析处理一个大尺寸Json文件</h4><p>这个其实没什么好说的，基本就是考量关于生成器和yield的知识。<br>但是这里有个比较关键的一点就是该怎么解析Json，这里肯定是不能用<code>file_get_contents</code>这种方法去解析的，因为把所有的字符串读到内存的时候已经OOM了。<br>这里我们需要写一个实现一个<code>StreamInterface</code>的解析Json类。这个就是个纯体力活就不叙述了。</p>
+<blockquote>
+<p>这里有个实现的库，可以直接读它的源码。<br><a href="https://packagist.org/packages/salsify/json-streaming-parser" target="_blank" rel="noopener">https://packagist.org/packages/salsify/json-streaming-parser</a></p>
+</blockquote>
 
 
     <!-- 显示photos -->
@@ -161,7 +167,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#跨域中HTTP请求交互的细节"><span class="toc-text">跨域中HTTP请求交互的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对联合索引的认识"><span class="toc-text">对联合索引的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对Oauth2的认识"><span class="toc-text">对Oauth2的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis集群中数据同步的细节"><span class="toc-text">Redis集群中数据同步的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EasyWechat协程为什么要替换guzzle-handler"><span class="toc-text">EasyWechat协程为什么要替换guzzle_handler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis和MySQL如何保持最终一致性"><span class="toc-text">Redis和MySQL如何保持最终一致性</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#跨域中HTTP请求交互的细节"><span class="toc-text">跨域中HTTP请求交互的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对联合索引的认识"><span class="toc-text">对联合索引的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对Oauth2的认识"><span class="toc-text">对Oauth2的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis集群中数据同步的细节"><span class="toc-text">Redis集群中数据同步的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EasyWechat协程为什么要替换guzzle-handler"><span class="toc-text">EasyWechat协程为什么要替换guzzle_handler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis和MySQL如何保持最终一致性"><span class="toc-text">Redis和MySQL如何保持最终一致性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解析处理一个大尺寸Json文件"><span class="toc-text">解析处理一个大尺寸Json文件</span></a></li></ol>
   </div>
 
 

@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  
+    <meta name="keywords" content>
+  
+
+  
+    <meta name="description" content="我觉得Scope是个坏模式">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/logo.png">
+  <title>我觉得Scope是个坏模式 [ Void ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/microb.css">
+    
+      <link rel="stylesheet" href="/css/iconfont.css">
+    
+  
+<link rel="alternate" href="/atom.xml" title="Void" type="application/atom+xml">
+</head>
+
+<body>
+  <nav class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+  <!-- <ul class="pure-menu-list float-r clearfix">
+    
+      <li class="pure-menu-item toc-menu">
+        <a id="menu-main-post" class="pure-menu-link" href="javascript:;">
+          <img class="menu-icon" src="/logo.png" alt="MENU">
+        </a>
+      </li>
+    
+  </ul>   -->
+  <a class="pure-menu-heading" href="/">
+      <h1 class="title">Void</h1>
+      <!-- <span>一个后端程序员</span> -->
+  </a>
+
+  <a href="/about" class="pure-menu-item pure-menu-has-children">
+    <h2 class="subtitle">about</h2>
+  </a>
+
+  <!-- 
+  <img class="logo" id="logo" src="/logo.png" alt="logo">
+   -->
+</nav>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <article class="post" id="post">
+  <header class="post-header text-center">
+    <h1 class="title">
+      我觉得Scope是个坏模式
+    </h1>
+    
+    <time class="time" datetime="2022-01-24T00:53:52.000Z">
+      2022-01-24
+    </time>
+    
+    <hr>
+  </header>
+  <div class="post-content">
+    <p>这里前提一下Scope是什么。可以阅读这边的文档<a href="https://learnku.com/docs/laravel/8.5/eloquent/10409#query-scopes" target="_blank" rel="noopener">Laravel Scope</a>。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Models</span>\<span class="title">User</span>;</span><br><span class="line"></span><br><span class="line">$users = User::query()</span><br><span class="line">    -&gt;popular()</span><br><span class="line">    -&gt;active()</span><br><span class="line">    -&gt;orderBy(<span class="string">'created_at'</span>)</span><br><span class="line">    -&gt;get();</span><br></pre></td></tr></table></figure>
+<p>在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是因为看到这么美好的封装然后尝试使用了一下，其实体验非常的不好。</p>
+<p>因为Scope的代码可能比较多，我不可能写在Model中，但是Model需要这些方法，我通过Trait这种方法放置Scope，类似下方的这样。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Event</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Scope</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Expand</span>;</span><br><span class="line"></span><br><span class="line">    ... more</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">trait</span> Scope &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">scopePopular</span><span class="params">(Builder $builder)</span> : <span class="title">Builder</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $builder-&gt;doSomething();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后第一个问题来了。我写链式查询的时候代码提示怎么来的，这里我是通过<code>laravel-ide-helper</code>这个扩展来生成注释的。生成后大概是这样的。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@method</span> static \Illuminate\Database\Eloquent\Builder|User popular()</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@method</span> static \Illuminate\Database\Eloquent\Builder|User active()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Event</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Scope</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Expand</span>;</span><br><span class="line"></span><br><span class="line">    ... more</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我相信很多人都是这样做的，因为这样确实得到了代码提示，也能够正常的工作。这种注释其实存在很大的隐患，其实所有的查询方法只会返回<code>Builder</code>这个类，写联合类型完全是因为要获取User这个类生成其他Scope方式，导致了注释的返回类型只能这么写。在你写动态PHP的时候完全没有问题，但是你一旦引入PHPStan或者Psalm这种静态分析的时候，噩梦就出现了。你没有办法解释为什么这里需要出现返回User类，导致只能忽略这些错误，但是数据库查询出来的值影响太多地方了，类似于下面这种情况。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateUserActive</span><span class="params">(User $user, int $active)</span>: <span class="title">User</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#这里第一个参数 PHPStan会提示这里的类型 \Illuminate\Database\Eloquent\Builder|User 不匹配User类型</span></span><br><span class="line">updateUserActive(User::query()-&gt;firstOrFail(), User::ACTIVE);</span><br></pre></td></tr></table></figure>
+<p>这其实就是第一个问题，Scope生成的代码注释没有处理好静态分析。<br>Scope的第二个问题，这其实是有封装带来的恐慌，我没有办法第一眼直观的看出这个SQL到底做了些什么？可能我debug代码需要非常多的跳转，因为我跳转是到对应的Model类注释方法上面，而不是具体实现的Scope方法。如果是用Trait实现，那我还需要到Trait类，再全局查询方法名称。这显然是有问题的。</p>
+<p>然后我还思考了一个问题，Scope的本质是封装查询条件让查询更方便。那如果你使用了DAO或者Repository这种分层，那Scope还有意义么？<br>我觉得是没有的，完全没有意义。因为复用了查询，那复用查询条件的次数就会大大降低。我观察我之前写的Scope最多复用次数都不会超过3次。</p>
+<p>我觉得Scope这种模式对我用处不大，而且我觉得这个博主封装查询条件的思路更好，更加静态化，没有我说的上述所有的问题。</p>
+<blockquote>
+<p><a href="https://timacdonald.me/dedicated-eloquent-model-query-builders/" target="_blank" rel="noopener">https://timacdonald.me/dedicated-eloquent-model-query-builders/</a></p>
+</blockquote>
+
+
+    <!-- 显示photos -->
+    
+
+  </div>
+  <div class="post-tags">
+    
+  </div>
+</article>
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <a href="/2021/08/24/源码解析-Laravel-RedisLock/" rel="next" title="源码解析-Laravel RedisLock">
+            <span>〈 </span> 源码解析-Laravel RedisLock
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+        
+      </div>
+    </div>
+  
+
+
+
+    </div>
+
+    
+
+  </div>
+
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+      
+        <a href="http://hexo.io" target="_blank" class="footer-link">Hexo</a>
+      
+        <a href="https://github.com/microacup/hexo-theme-micorb" target="_blank" class="footer-link">Theme microb</a>
+      
+    </div>
+  </footer>
+  
+
+<script>
+  // var titleTime,originTitle=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="[闷声发大财中...] "+originTitle,clearTimeout(titleTime)):(document.title="[+1s] "+originTitle,titleTime=setTimeout(function(){document.title=originTitle},2e3))});
+</script>
+
+<script>
+  // (function (window, document) {
+  //   window.requestAnimationFrame = (function () {
+  //     return window.requestAnimationFrame ||
+  //       window.webkitRequestAnimationFrame ||
+  //       window.mozRequestAnimationFrame ||
+  //       window.oRequestAnimationFrame ||
+  //       window.msRequestAnimationFrame ||
+  //       function (callback) {
+  //         setTimeout(callback, 1000 / 60);
+  //       }
+  //   })();
+
+  //   function init() {
+  //     addMenuEvent();
+  //   }
+  //   init();
+
+  //   function addMenuEvent() {
+  //     var menu = document.getElementById('menu-main-post');
+  //     if (menu) {
+  //       var toc = document.getElementById('toc');
+  //       menu.title = toc ? '目录' : '回到顶部';
+  //       menu.onclick = function () {
+  //         if (toc) {
+  //           if (toc.style.display == 'block') {
+  //             toc.style.display = 'none';
+  //           } else {
+  //             toc.style.display = 'block';
+  //           }
+  //         } else {
+  //           returnTop();
+  //         }
+  //       };
+  //     }
+  //   }
+
+  //   var timer = null;
+
+  //   function returnTop() {
+  //     cancelAnimationFrame(timer);
+  //     timer = requestAnimationFrame(function fn() {
+  //       var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+  //       if (oTop > 0) {
+  //         document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+  //         timer = requestAnimationFrame(fn);
+  //       } else {
+  //         cancelAnimationFrame(timer);
+  //       }
+  //     });
+  //   }
+
+  // })(window, document);
+</script>
+
+
+  
+
+
+
+</body>
+</html>
