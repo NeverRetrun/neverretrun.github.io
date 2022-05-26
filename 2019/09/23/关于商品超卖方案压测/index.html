@@ -1,77 +1,148 @@
-
 <!DOCTYPE html>
-<html lang="">
-
-
+<html lang=zh>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="theme-color" content="#202020">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  
-    <meta name="keywords" content>
-  
-
-  
-    <meta name="description" content="关于商品超卖方案压测">
-  
-  
-  <link rel="icon" type="image/x-icon" href="/logo.png">
-  <title>关于商品超卖方案压测 [ Void ]</title>
-  
-    <!-- stylesheets list from config.yml -->
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <meta name="description" content="关于商品超卖压测  这次是因为一次面试中，面试官说普通数据库中加读锁会有问题。他大概想通过Redis的原子计数或list中pop方法来解决超卖问题。我觉得加读锁没有问题，但是会大大降低并发量，那么我们就来压测一波。 压测3种方案：  MySQL中加读锁 Redis String 原子计数 Redis List    docker 配置为 2核2G  PHP-FPM配置： pm = dynamicp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于商品超卖方案压测">
+<meta property="og:url" content="https://cvoid.site/2019/09/23/关于商品超卖方案压测/index.html">
+<meta property="og:site_name" content="cvoid">
+<meta property="og:description" content="关于商品超卖压测  这次是因为一次面试中，面试官说普通数据库中加读锁会有问题。他大概想通过Redis的原子计数或list中pop方法来解决超卖问题。我觉得加读锁没有问题，但是会大大降低并发量，那么我们就来压测一波。 压测3种方案：  MySQL中加读锁 Redis String 原子计数 Redis List    docker 配置为 2核2G  PHP-FPM配置： pm = dynamicp">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/09/22/gmrNpJ8h1YHBe6P.png">
+<meta property="og:updated_time" content="2019-09-23T09:10:53.075Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于商品超卖方案压测">
+<meta name="twitter:description" content="关于商品超卖压测  这次是因为一次面试中，面试官说普通数据库中加读锁会有问题。他大概想通过Redis的原子计数或list中pop方法来解决超卖问题。我觉得加读锁没有问题，但是会大大降低并发量，那么我们就来压测一波。 压测3种方案：  MySQL中加读锁 Redis String 原子计数 Redis List    docker 配置为 2核2G  PHP-FPM配置： pm = dynamicp">
+<meta name="twitter:image" content="https://i.loli.net/2019/09/22/gmrNpJ8h1YHBe6P.png">
     
-      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
     
-      <link rel="stylesheet" href="/css/microb.css">
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
     
-      <link rel="stylesheet" href="/css/iconfont.css">
+    <!-- title -->
+    <title>关于商品超卖方案压测</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
     
-  
-<link rel="alternate" href="/atom.xml" title="Void" type="application/atom+xml">
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<link rel="alternate" href="/atom.xml" title="cvoid" type="application/atom+xml">
 </head>
 
-<body>
-  <nav class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-  <!-- <ul class="pure-menu-list float-r clearfix">
+<body class="max-width mx-auto px3 ltr">
     
-      <li class="pure-menu-item toc-menu">
-        <a id="menu-main-post" class="pure-menu-link" href="javascript:;">
-          <img class="menu-icon" src="/logo.png" alt="MENU">
-        </a>
-      </li>
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2019/10/04/源码解析-Hyperf框架/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2019/09/14/Structures库/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2019/09/23/关于商品超卖方案压测/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&text=关于商品超卖方案压测"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&title=关于商品超卖方案压测"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&is_video=false&description=关于商品超卖方案压测"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=关于商品超卖方案压测&body=Check out this article: https://cvoid.site/2019/09/23/关于商品超卖方案压测/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&title=关于商品超卖方案压测"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&title=关于商品超卖方案压测"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&title=关于商品超卖方案压测"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&title=关于商品超卖方案压测"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&name=关于商品超卖方案压测&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&t=关于商品超卖方案压测"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
     
-  </ul>   -->
-  <a class="pure-menu-heading" href="/">
-      <h1 class="title">Void</h1>
-      <!-- <span>一个后端程序员</span> -->
-  </a>
-
-  <a href="/about" class="pure-menu-item pure-menu-has-children">
-    <h2 class="subtitle">about</h2>
-  </a>
-
-  <!-- 
-  <img class="logo" id="logo" src="/logo.png" alt="logo">
-   -->
-</nav>
-
-  <div class="container" id="content-outer">
-    <div class="inner" id="content-inner">
-      <article class="post" id="post">
-  <header class="post-header text-center">
-    <h1 class="title">
-      关于商品超卖方案压测
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        关于商品超卖方案压测
     </h1>
-    
-    <time class="time" datetime="2019-09-23T09:04:08.000Z">
-      2019-09-23
-    </time>
-    
-    <hr>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">cvoid</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-09-23T09:04:08.000Z" itemprop="datePublished">2019-09-23</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
   </header>
-  <div class="post-content">
+  
+
+  <div class="content" itemprop="articleBody">
     <p>关于商品超卖压测</p>
 <hr>
 <p>这次是因为一次面试中，面试官说普通数据库中加读锁会有问题。他大概想通过Redis的原子计数或list中pop方法来解决超卖问题。我觉得加读锁没有问题，但是会大大降低并发量，那么我们就来压测一波。</p>
@@ -314,117 +385,136 @@
 </tbody>
 </table>
 
-
-    <!-- 显示photos -->
-    
-
-  </div>
-  <div class="post-tags">
-    
   </div>
 </article>
-  
-    <div class="post-nav">
-      <div class="post-nav-item post-nav-next">
-        
-          <a href="/2019/09/14/Structures库/" rel="next" title="PHP-Data Structures库">
-            <span>〈 </span> PHP-Data Structures库
-          </a>
-        
-      </div>
-  
-      <div class="post-nav-item post-nav-prev">
-        
-          <a href="/2019/10/04/源码解析-Hyperf框架/" rel="prev" title="源码解析-Hyperf框架">
-            源码解析-Hyperf框架 <span>〉</span>
-          </a>
-        
-      </div>
-    </div>
-  
 
 
 
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/NeverRetrun">项目</a></li>
+        
+      </ul>
     </div>
 
-    
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2019/09/23/关于商品超卖方案压测/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&text=关于商品超卖方案压测"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&title=关于商品超卖方案压测"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&is_video=false&description=关于商品超卖方案压测"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=关于商品超卖方案压测&body=Check out this article: https://cvoid.site/2019/09/23/关于商品超卖方案压测/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&title=关于商品超卖方案压测"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&title=关于商品超卖方案压测"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&title=关于商品超卖方案压测"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&title=关于商品超卖方案压测"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&name=关于商品超卖方案压测&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2019/09/23/关于商品超卖方案压测/&t=关于商品超卖方案压测"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
 
   </div>
+</div>
 
-  <footer class="footer text-center">
-    <div id="bottom-inner">
-      
-        <a href="http://hexo.io" target="_blank" class="footer-link">Hexo</a>
-      
-        <a href="https://github.com/microacup/hexo-theme-micorb" target="_blank" class="footer-link">Theme microb</a>
-      
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2022
+    cvoid
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
     </div>
-  </footer>
-  
+    <!-- styles -->
 
-<script>
-  // var titleTime,originTitle=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="[闷声发大财中...] "+originTitle,clearTimeout(titleTime)):(document.title="[+1s] "+originTitle,titleTime=setTimeout(function(){document.title=originTitle},2e3))});
-</script>
 
-<script>
-  // (function (window, document) {
-  //   window.requestAnimationFrame = (function () {
-  //     return window.requestAnimationFrame ||
-  //       window.webkitRequestAnimationFrame ||
-  //       window.mozRequestAnimationFrame ||
-  //       window.oRequestAnimationFrame ||
-  //       window.msRequestAnimationFrame ||
-  //       function (callback) {
-  //         setTimeout(callback, 1000 / 60);
-  //       }
-  //   })();
 
-  //   function init() {
-  //     addMenuEvent();
-  //   }
-  //   init();
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
-  //   function addMenuEvent() {
-  //     var menu = document.getElementById('menu-main-post');
-  //     if (menu) {
-  //       var toc = document.getElementById('toc');
-  //       menu.title = toc ? '目录' : '回到顶部';
-  //       menu.onclick = function () {
-  //         if (toc) {
-  //           if (toc.style.display == 'block') {
-  //             toc.style.display = 'none';
-  //           } else {
-  //             toc.style.display = 'block';
-  //           }
-  //         } else {
-  //           returnTop();
-  //         }
-  //       };
-  //     }
-  //   }
 
-  //   var timer = null;
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
 
-  //   function returnTop() {
-  //     cancelAnimationFrame(timer);
-  //     timer = requestAnimationFrame(function fn() {
-  //       var oTop = document.body.scrollTop || document.documentElement.scrollTop;
-  //       if (oTop > 0) {
-  //         document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
-  //         timer = requestAnimationFrame(fn);
-  //       } else {
-  //         cancelAnimationFrame(timer);
-  //       }
-  //     });
-  //   }
 
-  // })(window, document);
-</script>
 
+
+<!-- clipboard -->
 
   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
 
+<script src="/js/main.js"></script>
+<!-- search -->
 
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
 
 </body>
 </html>

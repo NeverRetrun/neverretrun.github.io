@@ -1,77 +1,144 @@
-
 <!DOCTYPE html>
-<html lang="">
-
-
+<html lang=zh>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="theme-color" content="#202020">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  
-    <meta name="keywords" content>
-  
-
-  
-    <meta name="description" content="源码解析-WechatPay">
-  
-  
-  <link rel="icon" type="image/x-icon" href="/logo.png">
-  <title>源码解析-WechatPay [ Void ]</title>
-  
-    <!-- stylesheets list from config.yml -->
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <meta name="description" content="最近在接微信服务商的接口中，发现微信终于开始自己写SDK了，感动之余顺便看下他们的代码。 下载SDK，然后写个Demo出来。 composer require wechatpay/wechatpay &amp;lt;?phprequire_once &apos;vendor/autoload.php&apos;;use WeChatPay\Builder;$builder = Builder::factory([    &apos;m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="源码解析-WechatPay">
+<meta property="og:url" content="https://cvoid.site/2022/01/28/源码解析-WechatPay/index.html">
+<meta property="og:site_name" content="cvoid">
+<meta property="og:description" content="最近在接微信服务商的接口中，发现微信终于开始自己写SDK了，感动之余顺便看下他们的代码。 下载SDK，然后写个Demo出来。 composer require wechatpay/wechatpay &amp;lt;?phprequire_once &apos;vendor/autoload.php&apos;;use WeChatPay\Builder;$builder = Builder::factory([    &apos;m">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-01-28T06:27:59.698Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="源码解析-WechatPay">
+<meta name="twitter:description" content="最近在接微信服务商的接口中，发现微信终于开始自己写SDK了，感动之余顺便看下他们的代码。 下载SDK，然后写个Demo出来。 composer require wechatpay/wechatpay &amp;lt;?phprequire_once &apos;vendor/autoload.php&apos;;use WeChatPay\Builder;$builder = Builder::factory([    &apos;m">
     
-      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
     
-      <link rel="stylesheet" href="/css/microb.css">
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
     
-      <link rel="stylesheet" href="/css/iconfont.css">
+    <!-- title -->
+    <title>源码解析-WechatPay</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
     
-  
-<link rel="alternate" href="/atom.xml" title="Void" type="application/atom+xml">
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<link rel="alternate" href="/atom.xml" title="cvoid" type="application/atom+xml">
 </head>
 
-<body>
-  <nav class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-  <!-- <ul class="pure-menu-list float-r clearfix">
+<body class="max-width mx-auto px3 ltr">
     
-      <li class="pure-menu-item toc-menu">
-        <a id="menu-main-post" class="pure-menu-link" href="javascript:;">
-          <img class="menu-icon" src="/logo.png" alt="MENU">
-        </a>
-      </li>
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/01/24/我觉得Scope是个坏模式/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2022/01/28/源码解析-WechatPay/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&text=源码解析-WechatPay"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&title=源码解析-WechatPay"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&is_video=false&description=源码解析-WechatPay"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=源码解析-WechatPay&body=Check out this article: https://cvoid.site/2022/01/28/源码解析-WechatPay/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&title=源码解析-WechatPay"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&title=源码解析-WechatPay"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&title=源码解析-WechatPay"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&title=源码解析-WechatPay"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&name=源码解析-WechatPay&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/01/28/源码解析-WechatPay/&t=源码解析-WechatPay"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
     
-  </ul>   -->
-  <a class="pure-menu-heading" href="/">
-      <h1 class="title">Void</h1>
-      <!-- <span>一个后端程序员</span> -->
-  </a>
-
-  <a href="/about" class="pure-menu-item pure-menu-has-children">
-    <h2 class="subtitle">about</h2>
-  </a>
-
-  <!-- 
-  <img class="logo" id="logo" src="/logo.png" alt="logo">
-   -->
-</nav>
-
-  <div class="container" id="content-outer">
-    <div class="inner" id="content-inner">
-      <article class="post" id="post">
-  <header class="post-header text-center">
-    <h1 class="title">
-      源码解析-WechatPay
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        源码解析-WechatPay
     </h1>
-    
-    <time class="time" datetime="2022-01-28T02:59:59.000Z">
-      2022-01-28
-    </time>
-    
-    <hr>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">cvoid</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-01-28T02:59:59.000Z" itemprop="datePublished">2022-01-28</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
   </header>
-  <div class="post-content">
+  
+
+  <div class="content" itemprop="articleBody">
     <p>最近在接微信服务商的接口中，发现微信终于开始自己写SDK了，感动之余顺便看下他们的代码。</p>
 <p>下载SDK，然后写个Demo出来。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">composer require wechatpay/wechatpay</span><br></pre></td></tr></table></figure>
@@ -86,113 +153,136 @@
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">jsonBased</span><span class="params">(array $config = [])</span>: <span class="title">Client</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">#...省略很多验证$config参数的代码</span></span><br><span class="line"></span><br><span class="line">  	<span class="comment">#这里就是判断$config中是否有handler</span></span><br><span class="line">  	<span class="comment">#这里有类似实现的就是EasyWechat </span></span><br><span class="line">    <span class="comment">#在用Swoole或者某些内存常驻框架的时候这里可以很好的嵌入一些有关于自定义连接池的设计</span></span><br><span class="line">    <span class="comment">/** <span class="doctag">@var</span> HandlerStack $stack */</span></span><br><span class="line">    $stack = <span class="keyword">isset</span>($config[<span class="string">'handler'</span>]) &amp;&amp; ($config[<span class="string">'handler'</span>] <span class="keyword">instanceof</span> HandlerStack) ? (<span class="keyword">clone</span> $config[<span class="string">'handler'</span>]) : HandlerStack::create();</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">#这里是Guzzle的Middware的设计</span></span><br><span class="line">  	<span class="comment">#这里实现上就是在发起请求的时候 带上一个自定义的Token 类似签名</span></span><br><span class="line">  	<span class="comment">#包括自己写一些网络请求的时候 一些签名 Token可以在这里附加</span></span><br><span class="line">  	<span class="comment">#在应用层的时候 自己发起请求只需要获取对应的Client类就好了</span></span><br><span class="line">    $stack-&gt;before(<span class="string">'prepare_body'</span>, Middleware::mapRequest(<span class="keyword">static</span>::signer((string)$config[<span class="string">'mchid'</span>], $config[<span class="string">'serial'</span>], $config[<span class="string">'privateKey'</span>])), <span class="string">'signer'</span>);</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">#这里是附加在获取到Response的时候 去判断验签</span></span><br><span class="line">  	<span class="comment">#这里是不需要判断http code是不是200的情况</span></span><br><span class="line">  	<span class="comment">#因为在 HandlerStack::create() Guzzle会有自己的中间件去判断请求成功</span></span><br><span class="line">  	<span class="comment">#所以这里只需要自己去判断验签成功即可</span></span><br><span class="line">    $stack-&gt;before(<span class="string">'http_errors'</span>, <span class="keyword">static</span>::verifier($config[<span class="string">'certs'</span>]), <span class="string">'verifier'</span>);</span><br><span class="line">    $config[<span class="string">'handler'</span>] = $stack;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">unset</span>($config[<span class="string">'mchid'</span>], $config[<span class="string">'serial'</span>], $config[<span class="string">'privateKey'</span>], $config[<span class="string">'certs'</span>], $config[<span class="string">'secret'</span>], $config[<span class="string">'merchant'</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Client(<span class="keyword">static</span>::withDefaults($config));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>整体微信支付SDK的代码非常的精炼，整体感觉不超过2000行，涉及到的内容也非常的少，感觉是一个比较适合阅读代码的库了。</p>
 
-
-    <!-- 显示photos -->
-    
-
-  </div>
-  <div class="post-tags">
-    
   </div>
 </article>
-  
-    <div class="post-nav">
-      <div class="post-nav-item post-nav-next">
+
+
+
         
-          <a href="/2022/01/24/我觉得Scope是个坏模式/" rel="next" title="我觉得Scope是个坏模式">
-            <span>〈 </span> 我觉得Scope是个坏模式
-          </a>
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/NeverRetrun">项目</a></li>
         
-      </div>
-  
-      <div class="post-nav-item post-nav-prev">
-        
-      </div>
+      </ul>
     </div>
-  
 
+    <div id="toc-footer" style="display: none">
+      
+    </div>
 
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2022/01/28/源码解析-WechatPay/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&text=源码解析-WechatPay"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&title=源码解析-WechatPay"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&is_video=false&description=源码解析-WechatPay"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=源码解析-WechatPay&body=Check out this article: https://cvoid.site/2022/01/28/源码解析-WechatPay/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&title=源码解析-WechatPay"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&title=源码解析-WechatPay"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&title=源码解析-WechatPay"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&title=源码解析-WechatPay"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/01/28/源码解析-WechatPay/&name=源码解析-WechatPay&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/01/28/源码解析-WechatPay/&t=源码解析-WechatPay"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
 
     </div>
 
-    
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
 
   </div>
+</div>
 
-  <footer class="footer text-center">
-    <div id="bottom-inner">
-      
-        <a href="http://hexo.io" target="_blank" class="footer-link">Hexo</a>
-      
-        <a href="https://github.com/microacup/hexo-theme-micorb" target="_blank" class="footer-link">Theme microb</a>
-      
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2022
+    cvoid
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
     </div>
-  </footer>
-  
+    <!-- styles -->
 
-<script>
-  // var titleTime,originTitle=document.title;document.addEventListener("visibilitychange",function(){document.hidden?(document.title="[闷声发大财中...] "+originTitle,clearTimeout(titleTime)):(document.title="[+1s] "+originTitle,titleTime=setTimeout(function(){document.title=originTitle},2e3))});
-</script>
 
-<script>
-  // (function (window, document) {
-  //   window.requestAnimationFrame = (function () {
-  //     return window.requestAnimationFrame ||
-  //       window.webkitRequestAnimationFrame ||
-  //       window.mozRequestAnimationFrame ||
-  //       window.oRequestAnimationFrame ||
-  //       window.msRequestAnimationFrame ||
-  //       function (callback) {
-  //         setTimeout(callback, 1000 / 60);
-  //       }
-  //   })();
 
-  //   function init() {
-  //     addMenuEvent();
-  //   }
-  //   init();
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
-  //   function addMenuEvent() {
-  //     var menu = document.getElementById('menu-main-post');
-  //     if (menu) {
-  //       var toc = document.getElementById('toc');
-  //       menu.title = toc ? '目录' : '回到顶部';
-  //       menu.onclick = function () {
-  //         if (toc) {
-  //           if (toc.style.display == 'block') {
-  //             toc.style.display = 'none';
-  //           } else {
-  //             toc.style.display = 'block';
-  //           }
-  //         } else {
-  //           returnTop();
-  //         }
-  //       };
-  //     }
-  //   }
 
-  //   var timer = null;
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
 
-  //   function returnTop() {
-  //     cancelAnimationFrame(timer);
-  //     timer = requestAnimationFrame(function fn() {
-  //       var oTop = document.body.scrollTop || document.documentElement.scrollTop;
-  //       if (oTop > 0) {
-  //         document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
-  //         timer = requestAnimationFrame(fn);
-  //       } else {
-  //         cancelAnimationFrame(timer);
-  //       }
-  //     });
-  //   }
 
-  // })(window, document);
-</script>
 
+
+<!-- clipboard -->
 
   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
 
+<script src="/js/main.js"></script>
+<!-- search -->
 
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
 
 </body>
 </html>
