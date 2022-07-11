@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <meta name="description" content="spatie/once 安装composer require spatie/once 介绍它的介绍是 A magic memoization function ，我一下子就联想到React hook中的 useMemo，然后就比较想看这个库。  &amp;lt;?php$myClass = new class() &amp;#123;    public function getNumber(): int">
+<meta property="og:type" content="article">
+<meta property="og:title" content="源码解析-spatie&#x2F;once">
+<meta property="og:url" content="https://cvoid.site/2022/07/11/源码解析-spatie-once/index.html">
+<meta property="og:site_name" content="cvoid">
+<meta property="og:description" content="spatie/once 安装composer require spatie/once 介绍它的介绍是 A magic memoization function ，我一下子就联想到React hook中的 useMemo，然后就比较想看这个库。  &amp;lt;?php$myClass = new class() &amp;#123;    public function getNumber(): int">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://s3.bmp.ovh/imgs/2022/07/11/521a327081883bcc.png">
+<meta property="og:updated_time" content="2022-07-11T06:58:55.803Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="源码解析-spatie&#x2F;once">
+<meta name="twitter:description" content="spatie/once 安装composer require spatie/once 介绍它的介绍是 A magic memoization function ，我一下子就联想到React hook中的 useMemo，然后就比较想看这个库。  &amp;lt;?php$myClass = new class() &amp;#123;    public function getNumber(): int">
+<meta name="twitter:image" content="https://s3.bmp.ovh/imgs/2022/07/11/521a327081883bcc.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>源码解析-spatie/once</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<link rel="alternate" href="/atom.xml" title="cvoid" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2022/01/28/源码解析-WechatPay/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2022/07/11/源码解析-spatie-once/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&text=源码解析-spatie/once"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&title=源码解析-spatie/once"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&is_video=false&description=源码解析-spatie/once"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=源码解析-spatie/once&body=Check out this article: https://cvoid.site/2022/07/11/源码解析-spatie-once/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&title=源码解析-spatie/once"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&title=源码解析-spatie/once"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&title=源码解析-spatie/once"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&title=源码解析-spatie/once"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&name=源码解析-spatie/once&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/07/11/源码解析-spatie-once/&t=源码解析-spatie/once"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#介绍"><span class="toc-number">2.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#细节"><span class="toc-number">3.</span> <span class="toc-text">细节</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        源码解析-spatie/once
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">cvoid</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-07-11T06:15:03.000Z" itemprop="datePublished">2022-07-11</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><a href="https://github.com/spatie/once" target="_blank" rel="noopener">spatie/once</a></p>
+<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">composer require spatie/once</span><br></pre></td></tr></table></figure>
+<h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>它的介绍是 <code>A magic memoization function</code> ，我一下子就联想到React hook中的 <code>useMemo</code>，然后就比较想看这个库。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">$myClass = new class() &#123;</span><br><span class="line">    public function getNumber(): int</span><br><span class="line">    &#123;</span><br><span class="line">        return once(function () &#123;</span><br><span class="line">            return rand(1, 10000);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$myClass-&gt;getNumber();  //int(4140)</span><br><span class="line">$myClass-&gt;getNumber();  //int(4140)</span><br><span class="line">$myClass-&gt;getNumber();  //int(4140)</span><br></pre></td></tr></table></figure>
+<p>被once方法warp的匿名函数返回会被缓存下来，后续执行相同的方法将直接返回缓存数据。和 hyperf中的 <code>#Cacheable</code>的功能基本类似，但是实现方法不同，这个库只用了200行不到代码就实现了相关的功能。</p>
+<p>这个库唯一的使用场景可能是FPM中一些减少一些重复递归的可能。实用性上远不及hyperf中的Cache来的实用，因为在Cache中的实现是利用了 <code>WeakMap</code> 所以在Cli的使用中要很小心，假如超过object的生命周期，那object对应缓存都会消失。</p>
+<p>文件之间的关系基本按下图所示。</p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/07/11/521a327081883bcc.png" alt="img" title="关系图"></p>
+<h5 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @template T</span><br><span class="line"> *</span><br><span class="line"> * @param callable(): T $callback</span><br><span class="line"> * @return T</span><br><span class="line"> */</span><br><span class="line">function once(callable $callback): mixed</span><br><span class="line">&#123;</span><br><span class="line">    /**</span><br><span class="line">     * 这里利用debug_backtrace方法主要获取上一级的trace 也就是记录调用once方法的类和参数</span><br><span class="line">     * 记录下trace与调用参数 来作为Key， 执行结果作为Value</span><br><span class="line">     * 记录到缓存中</span><br><span class="line">     * </span><br><span class="line">     * DEBUG_BACKTRACE_PROVIDE_OBJECT 这个常量 如果是实例调用方法 $class-&gt;something() 则会有 [&apos;object&apos;] = $class</span><br><span class="line">     * 这里只需要once方法的上一级trace 所以只需要获取2层的trace</span><br><span class="line">     */</span><br><span class="line">    $trace = debug_backtrace(</span><br><span class="line">        DEBUG_BACKTRACE_PROVIDE_OBJECT, 2</span><br><span class="line">    );</span><br><span class="line">    $backtrace = new Backtrace($trace);</span><br><span class="line"></span><br><span class="line">    //这里如果是eval调用外部命令则不缓存</span><br><span class="line">    if ($backtrace-&gt;getFunctionName() === &apos;eval&apos;) &#123;</span><br><span class="line">        return call_user_func($callback);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * object如果是静态方法调用则是trace的class</span><br><span class="line">     * 如果是实例化调用 则是trace的object</span><br><span class="line">     *</span><br><span class="line">     * hash是文件路径 + 函数名 + 序列化参数 组成的string</span><br><span class="line">     */</span><br><span class="line">    $object = $backtrace-&gt;getObject();</span><br><span class="line">    $hash = $backtrace-&gt;getHash();</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 下面是比较常规的Cache方法</span><br><span class="line">     */</span><br><span class="line">    $cache = Cache::getInstance();</span><br><span class="line">    if (is_string($object)) &#123;</span><br><span class="line">        $object = $cache;</span><br><span class="line">    &#125;</span><br><span class="line">    if (! $cache-&gt;isEnabled()) &#123;</span><br><span class="line">        return call_user_func($callback, $backtrace-&gt;getArguments());</span><br><span class="line">    &#125;</span><br><span class="line">    if (! $cache-&gt;has($object, $hash)) &#123;</span><br><span class="line">        $result = call_user_func($callback, $backtrace-&gt;getArguments());</span><br><span class="line"></span><br><span class="line">       $cache-&gt;set($object, $hash, $result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return $cache-&gt;get($object, $hash);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="https://github.com/NeverRetrun">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#介绍"><span class="toc-number">2.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#细节"><span class="toc-number">3.</span> <span class="toc-text">细节</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2022/07/11/源码解析-spatie-once/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&text=源码解析-spatie/once"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&title=源码解析-spatie/once"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&is_video=false&description=源码解析-spatie/once"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=源码解析-spatie/once&body=Check out this article: https://cvoid.site/2022/07/11/源码解析-spatie-once/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&title=源码解析-spatie/once"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&title=源码解析-spatie/once"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&title=源码解析-spatie/once"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&title=源码解析-spatie/once"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/07/11/源码解析-spatie-once/&name=源码解析-spatie/once&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/07/11/源码解析-spatie-once/&t=源码解析-spatie/once"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2022
+    cvoid
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

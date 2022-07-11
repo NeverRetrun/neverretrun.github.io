@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-    <meta name="description" content="这里前提一下Scope是什么。可以阅读这边的文档Laravel Scope。 use App\Models\User;$users = User::query()    -&amp;gt;popular()    -&amp;gt;active()    -&amp;gt;orderBy(&apos;created_at&apos;)    -&amp;gt;get(); 在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是">
+    <meta name="description" content="这里前提一下 Scope 是什么。可以阅读这边的文档 Laravel Scope。 use App\Models\User;$users = User::query()-&amp;gt;popular()    -&amp;gt;active()-&amp;gt;orderBy(&apos;created_at&apos;)    -&amp;gt;get(); 在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是因为看到这">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我觉得Scope是个坏模式">
+<meta property="og:title" content="我觉得 Scope 是个坏模式">
 <meta property="og:url" content="https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/index.html">
 <meta property="og:site_name" content="cvoid">
-<meta property="og:description" content="这里前提一下Scope是什么。可以阅读这边的文档Laravel Scope。 use App\Models\User;$users = User::query()    -&amp;gt;popular()    -&amp;gt;active()    -&amp;gt;orderBy(&apos;created_at&apos;)    -&amp;gt;get(); 在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是">
+<meta property="og:description" content="这里前提一下 Scope 是什么。可以阅读这边的文档 Laravel Scope。 use App\Models\User;$users = User::query()-&amp;gt;popular()    -&amp;gt;active()-&amp;gt;orderBy(&apos;created_at&apos;)    -&amp;gt;get(); 在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是因为看到这">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-01-24T01:33:09.418Z">
+<meta property="og:updated_time" content="2022-06-20T03:12:04.628Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我觉得Scope是个坏模式">
-<meta name="twitter:description" content="这里前提一下Scope是什么。可以阅读这边的文档Laravel Scope。 use App\Models\User;$users = User::query()    -&amp;gt;popular()    -&amp;gt;active()    -&amp;gt;orderBy(&apos;created_at&apos;)    -&amp;gt;get(); 在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是">
+<meta name="twitter:title" content="我觉得 Scope 是个坏模式">
+<meta name="twitter:description" content="这里前提一下 Scope 是什么。可以阅读这边的文档 Laravel Scope。 use App\Models\User;$users = User::query()-&amp;gt;popular()    -&amp;gt;active()-&amp;gt;orderBy(&apos;created_at&apos;)    -&amp;gt;get(); 在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是因为看到这">
     
     
       
@@ -36,7 +36,7 @@
       
     
     <!-- title -->
-    <title>我觉得Scope是个坏模式</title>
+    <title>我觉得 Scope 是个坏模式</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -88,16 +88,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&text=我觉得Scope是个坏模式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得Scope是个坏模式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&is_video=false&description=我觉得Scope是个坏模式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=我觉得Scope是个坏模式&body=Check out this article: https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得Scope是个坏模式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得Scope是个坏模式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得Scope是个坏模式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得Scope是个坏模式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&name=我觉得Scope是个坏模式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&t=我觉得Scope是个坏模式"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&text=我觉得 Scope 是个坏模式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&is_video=false&description=我觉得 Scope 是个坏模式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=我觉得 Scope 是个坏模式&body=Check out this article: https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&name=我觉得 Scope 是个坏模式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&t=我觉得 Scope 是个坏模式"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -114,7 +114,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        我觉得Scope是个坏模式
+        我觉得 Scope 是个坏模式
     </h1>
 
 
@@ -141,18 +141,18 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>这里前提一下Scope是什么。可以阅读这边的文档<a href="https://learnku.com/docs/laravel/8.5/eloquent/10409#query-scopes" target="_blank" rel="noopener">Laravel Scope</a>。</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Models</span>\<span class="title">User</span>;</span><br><span class="line"></span><br><span class="line">$users = User::query()</span><br><span class="line">    -&gt;popular()</span><br><span class="line">    -&gt;active()</span><br><span class="line">    -&gt;orderBy(<span class="string">'created_at'</span>)</span><br><span class="line">    -&gt;get();</span><br></pre></td></tr></table></figure>
+    <p>这里前提一下 Scope 是什么。可以阅读这边的文档 <a href="https://learnku.com/docs/laravel/8.5/eloquent/10409#query-scopes" target="_blank" rel="noopener">Laravel Scope</a>。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">App</span>\<span class="title">Models</span>\<span class="title">User</span>;</span><br><span class="line"></span><br><span class="line">$users = User::query()-&gt;popular()</span><br><span class="line">    -&gt;active()-&gt;orderBy(<span class="string">'created_at'</span>)</span><br><span class="line">    -&gt;get();</span><br></pre></td></tr></table></figure>
 <p>在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是因为看到这么美好的封装然后尝试使用了一下，其实体验非常的不好。</p>
-<p>因为Scope的代码可能比较多，我不可能写在Model中，但是Model需要这些方法，我通过Trait这种方法放置Scope，类似下方的这样。</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Event</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Scope</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Expand</span>;</span><br><span class="line"></span><br><span class="line">    ... more</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">trait</span> Scope &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">scopePopular</span><span class="params">(Builder $builder)</span> : <span class="title">Builder</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> $builder-&gt;doSomething();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后第一个问题来了。我写链式查询的时候代码提示怎么来的，这里我是通过<code>laravel-ide-helper</code>这个扩展来生成注释的。生成后大概是这样的。</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@method</span> static \Illuminate\Database\Eloquent\Builder|User popular()</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@method</span> static \Illuminate\Database\Eloquent\Builder|User active()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Event</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Scope</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Expand</span>;</span><br><span class="line"></span><br><span class="line">    ... more</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我相信很多人都是这样做的，因为这样确实得到了代码提示，也能够正常的工作。这种注释其实存在很大的隐患，其实所有的查询方法只会返回<code>Builder</code>这个类，写联合类型完全是因为要获取User这个类生成其他Scope方式，导致了注释的返回类型只能这么写。在你写动态PHP的时候完全没有问题，但是你一旦引入PHPStan或者Psalm这种静态分析的时候，噩梦就出现了。你没有办法解释为什么这里需要出现返回User类，导致只能忽略这些错误，但是数据库查询出来的值影响太多地方了，类似于下面这种情况。</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateUserActive</span><span class="params">(User $user, int $active)</span>: <span class="title">User</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#这里第一个参数 PHPStan会提示这里的类型 \Illuminate\Database\Eloquent\Builder|User 不匹配User类型</span></span><br><span class="line">updateUserActive(User::query()-&gt;firstOrFail(), User::ACTIVE);</span><br></pre></td></tr></table></figure>
-<p>这其实就是第一个问题，Scope生成的代码注释没有处理好静态分析。<br>Scope的第二个问题，这其实是有封装带来的恐慌，我没有办法第一眼直观的看出这个SQL到底做了些什么？可能我debug代码需要非常多的跳转，因为我跳转是到对应的Model类注释方法上面，而不是具体实现的Scope方法。如果是用Trait实现，那我还需要到Trait类，再全局查询方法名称。这显然是有问题的。</p>
-<p>然后我还思考了一个问题，Scope的本质是封装查询条件让查询更方便。那如果你使用了DAO或者Repository这种分层，那Scope还有意义么？<br>我觉得是没有的，完全没有意义。因为复用了查询，那复用查询条件的次数就会大大降低。我观察我之前写的Scope最多复用次数都不会超过3次。</p>
-<p>我觉得Scope这种模式对我用处不大，而且我觉得这个博主封装查询条件的思路更好，更加静态化，没有我说的上述所有的问题。</p>
+<p>因为 Scope 的代码可能比较多，我不可能写在 Model 中，但是 Model 需要这些方法，我通过 Trait 这种方法放置 Scope，类似下方的这样。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Event</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Scope</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Expand</span>;</span><br><span class="line"></span><br><span class="line">    ... more</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">trait</span> Scope &#123;<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">scopePopular</span><span class="params">(Builder $builder)</span> : <span class="title">Builder</span></span></span><br><span class="line"><span class="function">    </span>&#123;<span class="keyword">return</span> $builder-&gt;doSomething();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后第一个问题来了。我写链式查询的时候代码提示怎么来的，这里我是通过 <code>laravel-ide-helper</code> 这个扩展来生成注释的。生成后大概是这样的。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@method</span> static \Illuminate\Database\Eloquent\Builder|User popular()* <span class="doctag">@method</span> static \Illuminate\Database\Eloquent\Builder|User active()</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Event</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Scope</span>;</span><br><span class="line">    <span class="keyword">use</span> <span class="title">Expand</span>;</span><br><span class="line"></span><br><span class="line">    ... more</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我相信很多人都是这样做的，因为这样确实得到了代码提示，也能够正常的工作。这种注释其实存在很大的隐患，其实所有的查询方法只会返回 <code>Builder</code> 这个类，写联合类型完全是因为要获取 User 这个类生成其他 Scope 方式，导致了注释的返回类型只能这么写。在你写动态 PHP 的时候完全没有问题，但是你一旦引入 PHPStan 或者 Psalm 这种静态分析的时候，噩梦就出现了。你没有办法解释为什么这里需要出现返回 User 类，导致只能忽略这些错误，但是数据库查询出来的值影响太多地方了，类似于下面这种情况。</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateUserActive</span><span class="params">(User $user, int $active)</span>: <span class="title">User</span></span></span><br><span class="line"><span class="function"></span>&#123;<span class="comment">// do something&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#这里第一个参数 PHPStan 会提示这里的类型 \Illuminate\Database\Eloquent\Builder|User 不匹配 User 类型</span></span><br><span class="line">updateUserActive(User::query()-&gt;firstOrFail(), User::ACTIVE);</span><br></pre></td></tr></table></figure>
+<p>这其实就是第一个问题，Scope 生成的代码注释没有处理好静态分析。<br>Scope 的第二个问题，这其实是有封装带来的恐慌，我没有办法第一眼直观的看出这个 SQL 到底做了些什么？可能我 debug 代码需要非常多的跳转，因为我跳转是到对应的 Model 类注释方法上面，而不是具体实现的 Scope 方法。如果是用 Trait 实现，那我还需要到 Trait 类，再全局查询方法名称。这显然是有问题的。</p>
+<p>然后我还思考了一个问题，Scope 的本质是封装查询条件让查询更方便。那如果你使用了 DAO 或者 Repository 这种分层，那 Scope 还有意义么？<br>我觉得是没有的，完全没有意义。因为复用了查询，那复用查询条件的次数就会大大降低。我观察我之前写的 Scope 最多复用次数都不会超过 3 次。</p>
+<p>我觉得 Scope 这种模式对我用处不大，而且我觉得这个博主封装查询条件的思路更好，更加静态化，没有我说的上述所有的问题。</p>
 <blockquote>
 <p><a href="https://timacdonald.me/dedicated-eloquent-model-query-builders/" target="_blank" rel="noopener">https://timacdonald.me/dedicated-eloquent-model-query-builders/</a></p>
 </blockquote>
@@ -185,16 +185,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&text=我觉得Scope是个坏模式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得Scope是个坏模式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&is_video=false&description=我觉得Scope是个坏模式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=我觉得Scope是个坏模式&body=Check out this article: https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得Scope是个坏模式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得Scope是个坏模式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得Scope是个坏模式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得Scope是个坏模式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&name=我觉得Scope是个坏模式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&t=我觉得Scope是个坏模式"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&text=我觉得 Scope 是个坏模式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&is_video=false&description=我觉得 Scope 是个坏模式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=我觉得 Scope 是个坏模式&body=Check out this article: https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&name=我觉得 Scope 是个坏模式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&t=我觉得 Scope 是个坏模式"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
