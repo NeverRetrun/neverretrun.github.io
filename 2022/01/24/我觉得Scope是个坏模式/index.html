@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-    <meta name="description" content="这里前提一下 Scope 是什么。可以阅读这边的文档 Laravel Scope。 use App\Models\User;$users = User::query()-&amp;gt;popular()    -&amp;gt;active()-&amp;gt;orderBy(&apos;created_at&apos;)    -&amp;gt;get(); 在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是因为看到这">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="这里前提一下 Scope 是什么。可以阅读这边的文档 Laravel Scope。 use App\Models\User;$users &#x3D; User::query()-&gt;popular()    -&gt;active()-&gt;orderBy(&#39;created_at&#39;)    -&gt;get(); 在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是因为看到这">
 <meta property="og:type" content="article">
 <meta property="og:title" content="我觉得 Scope 是个坏模式">
-<meta property="og:url" content="https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/index.html">
+<meta property="og:url" content="https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="cvoid">
-<meta property="og:description" content="这里前提一下 Scope 是什么。可以阅读这边的文档 Laravel Scope。 use App\Models\User;$users = User::query()-&amp;gt;popular()    -&amp;gt;active()-&amp;gt;orderBy(&apos;created_at&apos;)    -&amp;gt;get(); 在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是因为看到这">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-06-20T03:12:04.628Z">
+<meta property="og:description" content="这里前提一下 Scope 是什么。可以阅读这边的文档 Laravel Scope。 use App\Models\User;$users &#x3D; User::query()-&gt;popular()    -&gt;active()-&gt;orderBy(&#39;created_at&#39;)    -&gt;get(); 在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是因为看到这">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-24T00:53:52.000Z">
+<meta property="article:modified_time" content="2022-06-20T03:12:04.628Z">
+<meta property="article:author" content="cvoid">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我觉得 Scope 是个坏模式">
-<meta name="twitter:description" content="这里前提一下 Scope 是什么。可以阅读这边的文档 Laravel Scope。 use App\Models\User;$users = User::query()-&amp;gt;popular()    -&amp;gt;active()-&amp;gt;orderBy(&apos;created_at&apos;)    -&amp;gt;get(); 在示例中的代码看起来非常的美好，通过封装查询条件让查询变得更加语义化。我也是因为看到这">
     
     
       
@@ -38,7 +38,9 @@
     <!-- title -->
     <title>我觉得 Scope 是个坏模式</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
     <!-- rss -->
@@ -46,7 +48,7 @@
     
 	<!-- mathjax -->
 	
-<link rel="alternate" href="/atom.xml" title="cvoid" type="application/atom+xml">
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="cvoid" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -63,7 +65,7 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/NeverRetrun">项目</a></li><!--
      -->
       </ul>
     </span>
@@ -71,10 +73,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="上一篇" href="/2022/01/28/源码解析-WechatPay/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="上一篇" href="/2022/01/28/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-WechatPay/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="下一篇" href="/2021/08/24/源码解析-Laravel-RedisLock/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="下一篇" href="/2021/08/24/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-Laravel-RedisLock/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -87,17 +89,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&text=我觉得 Scope 是个坏模式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&is_video=false&description=我觉得 Scope 是个坏模式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=我觉得 Scope 是个坏模式&body=Check out this article: https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&name=我觉得 Scope 是个坏模式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&t=我觉得 Scope 是个坏模式"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&text=我觉得 Scope 是个坏模式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&title=我觉得 Scope 是个坏模式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&is_video=false&description=我觉得 Scope 是个坏模式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=我觉得 Scope 是个坏模式&body=Check out this article: https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&title=我觉得 Scope 是个坏模式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&title=我觉得 Scope 是个坏模式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&title=我觉得 Scope 是个坏模式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&title=我觉得 Scope 是个坏模式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&name=我觉得 Scope 是个坏模式&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&t=我觉得 Scope 是个坏模式"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -173,7 +175,7 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/NeverRetrun">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/NeverRetrun">项目</a></li>
         
       </ul>
     </div>
@@ -184,17 +186,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&text=我觉得 Scope 是个坏模式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&is_video=false&description=我觉得 Scope 是个坏模式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=我觉得 Scope 是个坏模式&body=Check out this article: https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&title=我觉得 Scope 是个坏模式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&name=我觉得 Scope 是个坏模式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/01/24/我觉得Scope是个坏模式/&t=我觉得 Scope 是个坏模式"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&text=我觉得 Scope 是个坏模式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&title=我觉得 Scope 是个坏模式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&is_video=false&description=我觉得 Scope 是个坏模式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=我觉得 Scope 是个坏模式&body=Check out this article: https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&title=我觉得 Scope 是个坏模式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&title=我觉得 Scope 是个坏模式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&title=我觉得 Scope 是个坏模式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&title=我觉得 Scope 是个坏模式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&name=我觉得 Scope 是个坏模式&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2022/01/24/%E6%88%91%E8%A7%89%E5%BE%97Scope%E6%98%AF%E4%B8%AA%E5%9D%8F%E6%A8%A1%E5%BC%8F/&t=我觉得 Scope 是个坏模式"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -217,7 +219,9 @@
     
     2019-2022
     cvoid
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备2022007480号-1</a>
   </div>
+  
   <div class="footer-right">
     <nav>
       <ul>
@@ -226,11 +230,12 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/NeverRetrun">项目</a></li><!--
      -->
       </ul>
     </nav>
   </div>
+
 </footer>
 
     </div>
@@ -273,7 +278,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

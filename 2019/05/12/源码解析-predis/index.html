@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-    <meta name="description" content="源码阅读 - predis 阅读任务:   怎么用PHP代码与redis进行连接 解析代码结构   首先先看普通调用代码 然后我们继续看下代码的目录结构，最外面只有Client.php 与 一个注册自动加载的类。这里我们直接忽略自动加载的类。 打开Client.php 看构造方法 明显$this-&amp;gt;createConnection() 是创建redis连接 进入createConnectio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="源码阅读 - predis 阅读任务:   怎么用PHP代码与redis进行连接 解析代码结构   首先先看普通调用代码 然后我们继续看下代码的目录结构，最外面只有Client.php 与 一个注册自动加载的类。这里我们直接忽略自动加载的类。 打开Client.php 看构造方法 明显$this-&gt;createConnection() 是创建redis连接 进入createConnectio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="源码解析-predis">
-<meta property="og:url" content="https://cvoid.site/2019/05/12/源码解析-predis/index.html">
+<meta property="og:url" content="https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/index.html">
 <meta property="og:site_name" content="cvoid">
-<meta property="og:description" content="源码阅读 - predis 阅读任务:   怎么用PHP代码与redis进行连接 解析代码结构   首先先看普通调用代码 然后我们继续看下代码的目录结构，最外面只有Client.php 与 一个注册自动加载的类。这里我们直接忽略自动加载的类。 打开Client.php 看构造方法 明显$this-&amp;gt;createConnection() 是创建redis连接 进入createConnectio">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:description" content="源码阅读 - predis 阅读任务:   怎么用PHP代码与redis进行连接 解析代码结构   首先先看普通调用代码 然后我们继续看下代码的目录结构，最外面只有Client.php 与 一个注册自动加载的类。这里我们直接忽略自动加载的类。 打开Client.php 看构造方法 明显$this-&gt;createConnection() 是创建redis连接 进入createConnectio">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.ax1x.com/2019/05/12/Ehx6jf.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/05/12/Ehxr9I.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/05/12/Ehxs3t.png">
@@ -21,10 +21,10 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/05/12/EhxfEQ.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/05/12/Ehxgu8.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/05/12/EhxRHg.png">
-<meta property="og:updated_time" content="2019-08-25T08:43:40.846Z">
+<meta property="article:published_time" content="2019-05-12T12:15:52.000Z">
+<meta property="article:modified_time" content="2019-08-25T08:43:40.846Z">
+<meta property="article:author" content="cvoid">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="源码解析-predis">
-<meta name="twitter:description" content="源码阅读 - predis 阅读任务:   怎么用PHP代码与redis进行连接 解析代码结构   首先先看普通调用代码 然后我们继续看下代码的目录结构，最外面只有Client.php 与 一个注册自动加载的类。这里我们直接忽略自动加载的类。 打开Client.php 看构造方法 明显$this-&amp;gt;createConnection() 是创建redis连接 进入createConnectio">
 <meta name="twitter:image" content="https://s2.ax1x.com/2019/05/12/Ehx6jf.png">
     
     
@@ -47,7 +47,9 @@
     <!-- title -->
     <title>源码解析-predis</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
     <!-- rss -->
@@ -55,7 +57,7 @@
     
 	<!-- mathjax -->
 	
-<link rel="alternate" href="/atom.xml" title="cvoid" type="application/atom+xml">
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="cvoid" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -72,7 +74,7 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/NeverRetrun">项目</a></li><!--
      -->
       </ul>
     </span>
@@ -80,7 +82,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="上一篇" href="/2019/05/27/PHP-新-特性/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="上一篇" href="/2019/05/27/PHP-%E6%96%B0-%E7%89%B9%E6%80%A7/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
@@ -94,22 +96,22 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2019/05/12/源码解析-predis/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2019/05/12/源码解析-predis/&text=源码解析-predis"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2019/05/12/源码解析-predis/&title=源码解析-predis"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2019/05/12/源码解析-predis/&is_video=false&description=源码解析-predis"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=源码解析-predis&body=Check out this article: https://cvoid.site/2019/05/12/源码解析-predis/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2019/05/12/源码解析-predis/&title=源码解析-predis"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2019/05/12/源码解析-predis/&title=源码解析-predis"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2019/05/12/源码解析-predis/&title=源码解析-predis"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2019/05/12/源码解析-predis/&title=源码解析-predis"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2019/05/12/源码解析-predis/&name=源码解析-predis&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2019/05/12/源码解析-predis/&t=源码解析-predis"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&text=源码解析-predis"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&title=源码解析-predis"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&is_video=false&description=源码解析-predis"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=源码解析-predis&body=Check out this article: https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&title=源码解析-predis"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&title=源码解析-predis"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&title=源码解析-predis"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&title=源码解析-predis"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&name=源码解析-predis&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&t=源码解析-predis"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#源码阅读-predis"><span class="toc-number">1.</span> <span class="toc-text">源码阅读 - predis</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-predis"><span class="toc-number">1.</span> <span class="toc-text">源码阅读 - predis</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -187,28 +189,28 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/NeverRetrun">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/NeverRetrun">项目</a></li>
         
       </ul>
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#源码阅读-predis"><span class="toc-number">1.</span> <span class="toc-text">源码阅读 - predis</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-predis"><span class="toc-number">1.</span> <span class="toc-text">源码阅读 - predis</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2019/05/12/源码解析-predis/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2019/05/12/源码解析-predis/&text=源码解析-predis"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2019/05/12/源码解析-predis/&title=源码解析-predis"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2019/05/12/源码解析-predis/&is_video=false&description=源码解析-predis"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=源码解析-predis&body=Check out this article: https://cvoid.site/2019/05/12/源码解析-predis/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2019/05/12/源码解析-predis/&title=源码解析-predis"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2019/05/12/源码解析-predis/&title=源码解析-predis"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2019/05/12/源码解析-predis/&title=源码解析-predis"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2019/05/12/源码解析-predis/&title=源码解析-predis"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2019/05/12/源码解析-predis/&name=源码解析-predis&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2019/05/12/源码解析-predis/&t=源码解析-predis"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&text=源码解析-predis"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&title=源码解析-predis"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&is_video=false&description=源码解析-predis"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=源码解析-predis&body=Check out this article: https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&title=源码解析-predis"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&title=源码解析-predis"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&title=源码解析-predis"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&title=源码解析-predis"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&name=源码解析-predis&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2019/05/12/%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90-predis/&t=源码解析-predis"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -231,7 +233,9 @@
     
     2019-2022
     cvoid
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备2022007480号-1</a>
   </div>
+  
   <div class="footer-right">
     <nav>
       <ul>
@@ -240,11 +244,12 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/NeverRetrun">项目</a></li><!--
      -->
       </ul>
     </nav>
   </div>
+
 </footer>
 
     </div>
@@ -287,7 +292,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->

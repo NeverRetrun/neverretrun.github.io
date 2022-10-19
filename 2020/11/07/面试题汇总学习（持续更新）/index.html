@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang=zh>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="面试题汇总学习（持续更新） 目录 跨域中HTTP请求交互细节 对联合索引的认识 对Oauth2的认识 Redis集群中数据同步的细节 EasyWechat协程为什么要替换guzzle_handler Redis和MySQL如何保持最终一致性 解析处理一个大尺寸Json文件  跨域中HTTP请求交互的细节这里其实我知道，但是我可能当时根本没想到一点，后来洗头的时候灵感来了就想到是这个。 跨域其实分简">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试题汇总学习">
-<meta property="og:url" content="https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/index.html">
+<meta property="og:url" content="https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/index.html">
 <meta property="og:site_name" content="cvoid">
 <meta property="og:description" content="面试题汇总学习（持续更新） 目录 跨域中HTTP请求交互细节 对联合索引的认识 对Oauth2的认识 Redis集群中数据同步的细节 EasyWechat协程为什么要替换guzzle_handler Redis和MySQL如何保持最终一致性 解析处理一个大尺寸Json文件  跨域中HTTP请求交互的细节这里其实我知道，但是我可能当时根本没想到一点，后来洗头的时候灵感来了就想到是这个。 跨域其实分简">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-01-24T00:52:20.832Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-07T01:13:50.000Z">
+<meta property="article:modified_time" content="2022-01-24T00:52:20.832Z">
+<meta property="article:author" content="cvoid">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="面试题汇总学习">
-<meta name="twitter:description" content="面试题汇总学习（持续更新） 目录 跨域中HTTP请求交互细节 对联合索引的认识 对Oauth2的认识 Redis集群中数据同步的细节 EasyWechat协程为什么要替换guzzle_handler Redis和MySQL如何保持最终一致性 解析处理一个大尺寸Json文件  跨域中HTTP请求交互的细节这里其实我知道，但是我可能当时根本没想到一点，后来洗头的时候灵感来了就想到是这个。 跨域其实分简">
     
     
       
@@ -38,7 +38,9 @@
     <!-- title -->
     <title>面试题汇总学习</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    
+<link rel="stylesheet" href="/css/style.css">
+
     <!-- persian styles -->
     
     <!-- rss -->
@@ -46,7 +48,7 @@
     
 	<!-- mathjax -->
 	
-<link rel="alternate" href="/atom.xml" title="cvoid" type="application/atom+xml">
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="cvoid" type="application/atom+xml">
 </head>
 
 <body class="max-width mx-auto px3 ltr">
@@ -63,7 +65,7 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/NeverRetrun">项目</a></li><!--
      -->
       </ul>
     </span>
@@ -74,7 +76,7 @@
         <li><a class="icon" aria-label="上一篇" href="/2020/12/08/php8/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="下一篇" href="/2020/06/16/学习前端历程/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="下一篇" href="/2020/06/16/%E5%AD%A6%E4%B9%A0%E5%89%8D%E7%AB%AF%E5%8E%86%E7%A8%8B/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -87,22 +89,22 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&text=面试题汇总学习"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&title=面试题汇总学习"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&is_video=false&description=面试题汇总学习"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=面试题汇总学习&body=Check out this article: https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&title=面试题汇总学习"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&title=面试题汇总学习"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&title=面试题汇总学习"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&title=面试题汇总学习"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&name=面试题汇总学习&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&t=面试题汇总学习"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&text=面试题汇总学习"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&title=面试题汇总学习"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&is_video=false&description=面试题汇总学习"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=面试题汇总学习&body=Check out this article: https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&title=面试题汇总学习"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&title=面试题汇总学习"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&title=面试题汇总学习"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&title=面试题汇总学习"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&name=面试题汇总学习&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&t=面试题汇总学习"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#目录"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#跨域中HTTP请求交互的细节"><span class="toc-number">2.</span> <span class="toc-text">跨域中HTTP请求交互的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对联合索引的认识"><span class="toc-number">3.</span> <span class="toc-text">对联合索引的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对Oauth2的认识"><span class="toc-number">4.</span> <span class="toc-text">对Oauth2的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis集群中数据同步的细节"><span class="toc-number">5.</span> <span class="toc-text">Redis集群中数据同步的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EasyWechat协程为什么要替换guzzle-handler"><span class="toc-number">6.</span> <span class="toc-text">EasyWechat协程为什么要替换guzzle_handler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis和MySQL如何保持最终一致性"><span class="toc-number">7.</span> <span class="toc-text">Redis和MySQL如何保持最终一致性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解析处理一个大尺寸Json文件"><span class="toc-number">8.</span> <span class="toc-text">解析处理一个大尺寸Json文件</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%A8%E5%9F%9F%E4%B8%ADHTTP%E8%AF%B7%E6%B1%82%E4%BA%A4%E4%BA%92%E7%9A%84%E7%BB%86%E8%8A%82"><span class="toc-number">2.</span> <span class="toc-text">跨域中HTTP请求交互的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E7%9A%84%E8%AE%A4%E8%AF%86"><span class="toc-number">3.</span> <span class="toc-text">对联合索引的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9Oauth2%E7%9A%84%E8%AE%A4%E8%AF%86"><span class="toc-number">4.</span> <span class="toc-text">对Oauth2的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E7%9A%84%E7%BB%86%E8%8A%82"><span class="toc-number">5.</span> <span class="toc-text">Redis集群中数据同步的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EasyWechat%E5%8D%8F%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9B%BF%E6%8D%A2guzzle-handler"><span class="toc-number">6.</span> <span class="toc-text">EasyWechat协程为什么要替换guzzle_handler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis%E5%92%8CMySQL%E5%A6%82%E4%BD%95%E4%BF%9D%E6%8C%81%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">7.</span> <span class="toc-text">Redis和MySQL如何保持最终一致性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E5%A4%84%E7%90%86%E4%B8%80%E4%B8%AA%E5%A4%A7%E5%B0%BA%E5%AF%B8Json%E6%96%87%E4%BB%B6"><span class="toc-number">8.</span> <span class="toc-text">解析处理一个大尺寸Json文件</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -220,28 +222,28 @@
          
           <li><a href="/archives/">归档</a></li>
          
-          <li><a href="https://github.com/NeverRetrun">项目</a></li>
+          <li><a target="_blank" rel="noopener" href="https://github.com/NeverRetrun">项目</a></li>
         
       </ul>
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#目录"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#跨域中HTTP请求交互的细节"><span class="toc-number">2.</span> <span class="toc-text">跨域中HTTP请求交互的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对联合索引的认识"><span class="toc-number">3.</span> <span class="toc-text">对联合索引的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对Oauth2的认识"><span class="toc-number">4.</span> <span class="toc-text">对Oauth2的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis集群中数据同步的细节"><span class="toc-number">5.</span> <span class="toc-text">Redis集群中数据同步的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EasyWechat协程为什么要替换guzzle-handler"><span class="toc-number">6.</span> <span class="toc-text">EasyWechat协程为什么要替换guzzle_handler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis和MySQL如何保持最终一致性"><span class="toc-number">7.</span> <span class="toc-text">Redis和MySQL如何保持最终一致性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解析处理一个大尺寸Json文件"><span class="toc-number">8.</span> <span class="toc-text">解析处理一个大尺寸Json文件</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%A8%E5%9F%9F%E4%B8%ADHTTP%E8%AF%B7%E6%B1%82%E4%BA%A4%E4%BA%92%E7%9A%84%E7%BB%86%E8%8A%82"><span class="toc-number">2.</span> <span class="toc-text">跨域中HTTP请求交互的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E7%9A%84%E8%AE%A4%E8%AF%86"><span class="toc-number">3.</span> <span class="toc-text">对联合索引的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9Oauth2%E7%9A%84%E8%AE%A4%E8%AF%86"><span class="toc-number">4.</span> <span class="toc-text">对Oauth2的认识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E7%9A%84%E7%BB%86%E8%8A%82"><span class="toc-number">5.</span> <span class="toc-text">Redis集群中数据同步的细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EasyWechat%E5%8D%8F%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9B%BF%E6%8D%A2guzzle-handler"><span class="toc-number">6.</span> <span class="toc-text">EasyWechat协程为什么要替换guzzle_handler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis%E5%92%8CMySQL%E5%A6%82%E4%BD%95%E4%BF%9D%E6%8C%81%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">7.</span> <span class="toc-text">Redis和MySQL如何保持最终一致性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E5%A4%84%E7%90%86%E4%B8%80%E4%B8%AA%E5%A4%A7%E5%B0%BA%E5%AF%B8Json%E6%96%87%E4%BB%B6"><span class="toc-number">8.</span> <span class="toc-text">解析处理一个大尺寸Json文件</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&text=面试题汇总学习"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&title=面试题汇总学习"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&is_video=false&description=面试题汇总学习"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=面试题汇总学习&body=Check out this article: https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&title=面试题汇总学习"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&title=面试题汇总学习"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&title=面试题汇总学习"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&title=面试题汇总学习"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&name=面试题汇总学习&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2020/11/07/面试题汇总学习（持续更新）/&t=面试题汇总学习"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&text=面试题汇总学习"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&title=面试题汇总学习"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&is_video=false&description=面试题汇总学习"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=面试题汇总学习&body=Check out this article: https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&title=面试题汇总学习"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&title=面试题汇总学习"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&title=面试题汇总学习"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&title=面试题汇总学习"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&name=面试题汇总学习&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://cvoid.site/2020/11/07/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB%E5%AD%A6%E4%B9%A0%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/&t=面试题汇总学习"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -264,7 +266,9 @@
     
     2019-2022
     cvoid
+    <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">浙ICP备2022007480号-1</a>
   </div>
+  
   <div class="footer-right">
     <nav>
       <ul>
@@ -273,11 +277,12 @@
      --><!--
        --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a href="https://github.com/NeverRetrun">项目</a></li><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/NeverRetrun">项目</a></li><!--
      -->
       </ul>
     </nav>
   </div>
+
 </footer>
 
     </div>
@@ -320,7 +325,9 @@
   })
   </script>
 
+
 <script src="/js/main.js"></script>
+
 <!-- search -->
 
 <!-- Google Analytics -->
